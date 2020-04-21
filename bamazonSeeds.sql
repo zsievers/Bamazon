@@ -40,3 +40,5 @@ VALUES ("Secret Hitler", "Board Games", 25 , 9);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Scrabble", "Board Games", 20 , 20);
+
+SELECT*FROM proudcts;
