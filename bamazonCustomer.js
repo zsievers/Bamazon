@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+// var console_table = require ("console.table");
 
 // CREATE CONNECTION TO SQL DATABASE
 
@@ -26,53 +27,64 @@ connection.connect(function (err) {
 
 // inquirer prompts user input
 function productInfo() {
-  inquirer
-    .prompt([
+  inquirer.prompt([
       {
         type: "input",
-        name: "productItemId",
+        name: "product",
         message: "Enter the Item ID of the product you would like to purchase: "
       },
       {
         type: "input",
-        name: "itemQuantity",
+        name: "quantity",
         message: "How many units would you like to purchase?"
       },
     ])
-    .then(function (user) {
-      connection.query("SELECT * FROM products", function (err, res) {
+    .then(function (res) {
+      // re-defining for ease of typing
+      var item2 = res.product;
+      var quantity2 = res.quantity;
+
+      connection.query("SELECT * FROM products WHERE ?", {item_id: item2 }, function (err, response) {
         if (err) throw err;
-
-        // checking if product is in stock
-        if (user.itemQuantity <= res[user.productItemId - 1].stock_quantity) {
-          console.log("-------------------------------------------");
-          console.log("Your order for " +res[user.productItemId - 1].product_name +" has been placed");
-          console.log("-------------------------------------------");
-          console.log("Total Cost: $" +user.itemQuantity * res[user.productItemId - 1].price);
-
-          // updating database with new stock quantity
-          connection.query("UPDATE products SET ? WHERE ?", 
-            [
-              {
-                stock_quantity: res[user.productItemId -1].stock_quantity - user.itemQuantity
-              },
-              {
-                item_id: user.productItemId
-              }
-            ],
-            function(err) {
-              if (err) throw err;
-              console.log("-------------------------------------------");
-              keepShopping();
-            }
-          )
+        // invalid id num
+        if (response.length === 0 ){
+          console.log("\n\nI'm sorry, that was an invalid id. Please select an Item id from the product list above");
+          console.log("\n\n---------------------------------------------------------------------------------------");
+          inventory();
         }
+        // valid id num
         else {
-          console.log("Sorry.. the desired amount of that item is not in stock: Please enter new amount or search another prodcut");
-          productInfo();
+
+          // if the quantity of requested is in stock
+          var productRes = response[0];
+
+          if (quantity2 <= productRes.stock_quantity) {
+            console.log("Item is in stock and order is being processed now");
+
+            // updating inventory
+            var updateInventory = "UPDATE products SET stock_quantity = " +(productRes.stock_quantity - quantity2)+ " WHERE item_id = " +item2;
+            connection.query(updateInventory, function (err, data) {
+              if (err) throw err;
+              
+              console.log('\nYour order has been placed! Your total is $' + productRes.price * quantity2);
+              console.log("-------------------------------\n");
+              console.log('Thank you for shopping with us!');
+              console.log("-------------------------------\n");
+              keepShopping();
+          })
         }
-      });
+          // if quantity is NOT in stock
+          else {
+            console.log("\nI apologize, the item you're wanting to purchase doesn't have sufficient quantity for your order.");
+            console.log("\n-----------------------------------------------------------------------------------------------");
+            console.log("Please adjust your order.");
+            console.log("\n-----------------------------------------------------------------------------------------------");
+            console.log("Your item was " +productRes.product_name+ " and it has " +productRes.stock_quantity+ " in stock.");
+            inventory();
+          }
+      };
     });
+  });
 }
 
 
@@ -80,7 +92,7 @@ function inventory() {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
     for (var i = 0; i < res.length; i++) {
-      console.log("Item ID: " + res[i].item_id);
+      console.log("\nItem ID: " + res[i].item_id);
       console.log("Product Name: " + res[i].product_name);
       console.log("Department: " + res[i].department_name);
       console.log("Price: $" + res[i].price);
