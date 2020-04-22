@@ -9,7 +9,7 @@ CREATE TABLE products (
     price DECIMAL (10,2) NULL,
     stock_quantity INT NULL,
     PRIMARY KEY (item_id)
-)
+);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Silence of Adam", "Learning", 15 , 50);
@@ -41,4 +41,4 @@ VALUES ("Secret Hitler", "Board Games", 25 , 9);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Scrabble", "Board Games", 20 , 20);
 
-SELECT*FROM proudcts;
+SELECT*FROM products;

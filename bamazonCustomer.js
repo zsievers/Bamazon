@@ -92,7 +92,6 @@ function inventory() {
 }
 
 
-
 // // inquirer prompt asking if user wants to keep shopping. yes = inventory ; no = end connection
 function keepShopping(){
   inquirer.prompt([
