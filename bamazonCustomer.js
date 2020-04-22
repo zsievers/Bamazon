@@ -114,7 +114,7 @@ function keepShopping(){
       choices: ["Yes", "No"]
     }
   ]).then(function(res) {
-    if (res.confirm) {
+    if (res === "Yes") {
       console.log("------------------------------");
       inventory();
     }
