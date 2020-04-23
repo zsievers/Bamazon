@@ -1,7 +1,7 @@
 # Bamazon
 
-# Intro
-This is Bamazon! A command line node / mySQL project that mimics an Amazon like store front application. 
+
+Bamazon is a CLI node / mySQL project that mimics an Amazon like store front application. 
 
 <li>My Goal with this project was to combine mySQL with node.js to perform CRUD operations into the database. </li>
 

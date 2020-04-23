@@ -49,7 +49,7 @@ function productInfo() {
         // invalid id num
         if (response.length === 0 ){
           console.log("\n\nI'm sorry, that was an invalid id. Please select an Item id from the product list above");
-          console.log("\n\n---------------------------------------------------------------------------------------");
+          console.log("----------------------------------------");
           inventory();
         }
         // valid id num
@@ -67,18 +67,18 @@ function productInfo() {
               if (err) throw err;
               
               console.log('\nYour order has been placed! Your total is $' + productRes.price * quantity2);
-              console.log("-------------------------------\n");
+              console.log("----------------------------------------");
               console.log('Thank you for shopping with us!');
-              console.log("-------------------------------\n");
+              console.log("----------------------------------------");
               keepShopping();
           })
         }
           // if quantity is NOT in stock
           else {
             console.log("\nI apologize, the item you're wanting to purchase doesn't have sufficient quantity for your order.");
-            console.log("\n-----------------------------------------------------------------------------------------------");
+            console.log("----------------------------------------");
             console.log("Please adjust your order.");
-            console.log("\n-----------------------------------------------------------------------------------------------");
+            console.log("----------------------------------------");
             console.log("Your item was " +productRes.product_name+ " and it has " +productRes.stock_quantity+ " in stock.");
             inventory();
           }
@@ -114,8 +114,8 @@ function keepShopping(){
       choices: ["Yes", "No"]
     }
   ]).then(function(res) {
-    if (res === "Yes") {
-      console.log("------------------------------");
+    if (res.confirm === "Yes") {
+      console.log("----------------------------------------");
       inventory();
     }
     else {
