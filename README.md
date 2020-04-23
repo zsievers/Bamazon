@@ -7,7 +7,7 @@ Bamazon is a CLI node / mySQL project that mimics an Amazon like store front app
 
 <li>This project forced me to improve my understanding of the javascript logic with implementing if/else statements and basic use of mySQL workbench. </li>
 
-<li>With this project being a CLI application, take a look at my video demonstrating the app. Thanks for viewing my project!</li>
+<li>With this project being a CLI application, take a look at my demonstration video by clicking the image. Thanks for viewing my project!</li>
 
 # Demonstration
 <a href="https://www.youtube.com/watch?v=5Dy8f6hi88Q"><img src="./images/bamazon.PNG" width="1000" height="500"></a>
