@@ -59,7 +59,7 @@ function productInfo() {
           var productRes = response[0];
 
           if (quantity2 <= productRes.stock_quantity) {
-            console.log("Item is in stock and order is being processed now");
+            console.log("\nItem is in stock and order is being processed now");
 
             // updating inventory
             var updateInventory = "UPDATE products SET stock_quantity = " +(productRes.stock_quantity - quantity2)+ " WHERE item_id = " +item2;
@@ -119,7 +119,7 @@ function keepShopping(){
       inventory();
     }
     else {
-      console.log("Thanks for shopping Bamazon!");
+      console.log("\nThanks for shopping Bamazon!");
       connection.end();
     }
   });
