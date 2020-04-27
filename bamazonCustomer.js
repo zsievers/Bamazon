@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-// var console_table = require ("console.table");
+var colors = require ('colors');
 
 // CREATE CONNECTION TO SQL DATABASE
 
@@ -21,7 +21,7 @@ var connection = mysql.createConnection({
 //
 connection.connect(function (err) {
   if (err) throw err;
-  // console.log("connected as id " + connection.threadId);
+  console.log("You're connected to Bamazon!");
   inventory();
 });
 
@@ -48,7 +48,7 @@ function productInfo() {
         if (err) throw err;
         // invalid id num
         if (response.length === 0 ){
-          console.log("\n\nI'm sorry, that was an invalid id. Please select an Item id from the product list above");
+          console.log(colors.red("\n\nI'm sorry, that was an invalid id. Please select an Item id from the product list above"));
           console.log("----------------------------------------");
           inventory();
         }
@@ -68,7 +68,7 @@ function productInfo() {
               
               console.log('\nYour order has been placed! Your total is $' + productRes.price * quantity2);
               console.log("----------------------------------------");
-              console.log('Thank you for shopping with us!');
+              console.log(colors.green('Thank you for shopping with us!'));
               console.log("----------------------------------------");
               keepShopping();
           })
@@ -92,12 +92,12 @@ function inventory() {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
     for (var i = 0; i < res.length; i++) {
-      console.log("\nItem ID: " + res[i].item_id);
+      console.log(colors.yellow("\nItem ID: " + res[i].item_id));
       console.log("Product Name: " + res[i].product_name);
       console.log("Department: " + res[i].department_name);
       console.log("Price: $" + res[i].price);
       console.log("Number in stock: " + res[i].stock_quantity);
-      console.log("----------------------------------------");
+      console.log("\n----------------------------------------");
     }
     productInfo();
   });
